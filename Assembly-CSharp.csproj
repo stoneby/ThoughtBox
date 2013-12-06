@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+	<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+	<ProductVersion>10.0.20506</ProductVersion>
+	<SchemaVersion>2.0</SchemaVersion>
+	<ProjectGuid>{FD698859-BDCE-0130-C1F9-2DB2F9147E3C}</ProjectGuid>
+	<OutputType>Library</OutputType>
+	<AppDesignerFolder>Properties</AppDesignerFolder>
+	<RootNamespace></RootNamespace>
+	<AssemblyName>Assembly-CSharp</AssemblyName>
+	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+	<FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	<DebugSymbols>true</DebugSymbols>
+	<DebugType>full</DebugType>
+	<Optimize>false</Optimize>
+	<OutputPath>Temp\bin\Debug\</OutputPath>
+	<DefineConstants>DEBUG;TRACE;UNITY_3_5_7;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_WIN;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_WEBCAM;ENABLE_MICROPHONE;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;ENABLE_SUBSTANCE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	<DebugType>pdbonly</DebugType>
+	<Optimize>true</Optimize>
+	<OutputPath>Temp\bin\Release\</OutputPath>
+	<DefineConstants>TRACE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+	<Reference Include="System" />
+    <Reference Include="System.XML" />
+	<Reference Include="System.Core" />
+	<Reference Include="UnityEngine">
+	  <HintPath>C:/Program Files (x86)/Unity/2.9.0/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	</Reference>
+	<Reference Include="UnityEditor">
+	  <HintPath>C:/Program Files (x86)/Unity/2.9.0/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	</Reference>
+  </ItemGroup>
+  <ItemGroup>
+     <Compile Include="Assets\CoroutineTest\CoroutineTest.cs" />
+     <Compile Include="Assets\FrameTest\AbstractMove.cs" />
+     <Compile Include="Assets\FrameTest\AnimationMove.cs" />
+     <Compile Include="Assets\FrameTest\FrameTestMenu.cs" />
+     <Compile Include="Assets\FrameTest\MoveAnalyzer.cs" />
+     <Compile Include="Assets\FrameTest\ScriptMove.cs" />
+     <Compile Include="Assets\FrameTest\TweenMove.cs" />
+     <Compile Include="Assets\RollerTest\GestureHandler.cs" />
+     <Compile Include="Assets\RollerTest\GestureMenu.cs" />
+     <Compile Include="Assets\RollerTest\RollerMenu.cs" />
+     <Compile Include="Assets\RollerTest\UnitTest\Assertion.cs" />
+     <Compile Include="Assets\RollerTest\UnitTest\RollingStripUT.cs" />
+     <Compile Include="Assets\SmartAsset\Collider\ColliderCombiner.cs" />
+     <Compile Include="Assets\SmartAsset\ITween\iTween.cs" />
+     <Compile Include="Assets\SmartAsset\Rolling\ColorUpdater.cs" />
+     <Compile Include="Assets\SmartAsset\Rolling\RollingContainer.cs" />
+     <Compile Include="Assets\SmartAsset\Rolling\RollingItemUpdater.cs" />
+     <Compile Include="Assets\SmartAsset\Rolling\RollingStrip.cs" />
+     <Compile Include="Assets\SmartAsset\Rolling\StripContainer.cs" />
+     <Compile Include="Assets\SmartAsset\Rolling\StripItem.cs" />
+     <Compile Include="Assets\SmartAsset\Rolling\TextureUpdater.cs" />
+     <Compile Include="Assets\SmartAsset\Utils\FramerateKiller.cs" />
+     <None Include="Assets\SmartAsset\StripList.txt" />
+     <None Include="Assets\FrameTest\Note.txt" />
+     <None Include="Assets\CoroutineTest\Note.txt" />
+     <None Include="Assets\RollerTest\Note.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	   Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  
+</Project>

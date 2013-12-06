@@ -1,0 +1,45 @@
+﻿Animation Stuff:
+
+Clip wrap mode:
+- Once: Play once stop when finish.
+- ClampForever: Play once, always sampling the last frame. (ps. looks same with Once mode, but animation is not on stop status)
+
+Animation state:
+! To set animation state from internal.
+- time: Sample animation on specific time.
+
++ Usage 1.
+Say we have a 60 frame rate animation, 1-20: idle 21-40 walk, 41-60 jump.
+animation["Example"].time = 0 / 3; // Sample at idle part.
+animation["Example"].time = 1 / 3; // Sample at walk part.
+
+- speed: To control animation speed.
+animation["Example"].speed = 0; // To sample exactly the specific frame.
+
++ Usage 2.
+That we know current time, we want to start specific animation part.
+Usually we have some logic on Update(), the time is not exactly to hit animation's frame, we need to know which part animation we are playing.
+
+if (deltaTime > 0 && deltaTime <= 1 / 3)
+{
+	// we are in idle state.
+	// do sth.
+}
+
+Note:
+Animation in loop style pay attention.
+! Say spinning stuff that using buffer to approach spinning effect with one same animation.
+! For short our reel spin as example.
+
+Animation stop by time reach to animation length. The last frame of animation is usually hit when the current frame time is beyond animation's supposing time use.
+
+Ideal frame scene.
+-- -- -- -- -- -- -- Stop 
+0  10 20 30 40 50 60
+
+Reality frame scene.
+-- -- -- -- -- -- -- stop
+0  12 21 31 42 49 64	
+0  12 21 31 42 49 58 70
+
+Key point: the last frame looking is not that smooth, if speed is high I think. Of every spin circle.

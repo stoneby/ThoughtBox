@@ -1,0 +1,18 @@
+transfrom.collider.bounds (all in world position)
+- center: center of collider
+- extents: half of size of collider according to center.
+
+boxcollider (all in related position, just what you seen in inspector, no caring about transform properties like position / scale / rotation.)
+- center:
+- extents:
+- size:
+
+Note:
+renderer.bounds
+collider.bounds  are all read only.
+
+if you call like this:
+renderer.bounds.Encapsulate(new Vector3(1, 1, 1)); // nothing gonna happen to the object bounds belongs to. The change things is temp bounds.
+
+After combine bounds we need to set offset of current combined game object, z order should be higher priority from children.
+- In this example, offset of Z.

@@ -1,0 +1,16 @@
+﻿Coroutine:
+
+The big deal is all about real time.
+
+yield return new WaitForSeconds(1f);
+
+As my test, it will stop at range (<= 0.004) less than 1f, or the first one time that more than 1f.
+
+yield return call will just happen one new frame.
+
+a();	// frame 101
+yield return null;
+b();	// frame 102
+
+
+
