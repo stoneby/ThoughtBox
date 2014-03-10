@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -209,6 +210,29 @@ public class RollingContainer : MonoBehaviour
     void Start()
     {
         Generate();
+
+        var gestureHandler = GetComponent<GestureHandler>();
+        gestureHandler.FireScroll += OnFireScroll;
+        gestureHandler.StopScroll += OnStopScroll;
+        gestureHandler.UpdateScroll += OnUpdateScroll;
+    }
+
+    private void OnUpdateScroll(object sender, UpdateEventArgs args)
+    {
+        UpdatePosition(args.Position);
+    }
+
+    private void OnFireScroll(object sender, SpeedEventArgs args)
+    {
+        Debug.Log("On fire scroll.");
+        Speed = args.Speed;
+        SpinForever();
+    }
+
+    private void OnStopScroll(object sender, EventArgs args)
+    {
+        Debug.Log("On stop scroll.");
+        Stop();
     }
 
     private void Validate()

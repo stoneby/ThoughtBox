@@ -3,88 +3,93 @@ using UnityEngine;
 
 public class GestureHandler : MonoBehaviour
 {
-    public bool Enabled;
+    public event EventHandler<SpeedEventArgs> FireScroll;
+    public event EventHandler<EventArgs> StopScroll;
+    public event EventHandler<UpdateEventArgs> UpdateScroll;
 
-    private bool dragTrigger;
-    private bool scrollTrigger;
-    private Vector3 lastMousePosition;
-
-    public event EventHandler<EventArgs> FireScroll;
+    public SpeedAnalyzer SpeedAnalyzer;
 
     void Start()
     {
+        SpeedAnalyzer.RollStart += OnRollStart;
+    }
+
+    private void OnRollStart(object sender, SpeedEventArgs args)
+    {
+        FireScrollEvent(args);
     }
 
     void OnMouseExit()
     {
-        // no dragging mode.
-        if(!dragTrigger)
-        {
-            return;
-        }
-
-        FireScrollEvent();
-
+        var currentWorldPosition =
+            Camera.mainCamera.ScreenToWorldPoint(new Vector3(0, Input.mousePosition.y,
+                                                             (transform.position.z -
+                                                              Camera.mainCamera.transform.position.z)));
+        //SpeedAnalyzer.OnEnd(currentWorldPosition);
         Debug.Log("Exit: " + Input.mousePosition + ", frame count: " + Time.frameCount);
     }
 
     void OnMouseDrag()
     {
-        if(scrollTrigger)
+        var currentWorldPosition =
+            Camera.mainCamera.ScreenToWorldPoint(new Vector3(0, Input.mousePosition.y,
+                                                             (transform.position.z -
+                                                              Camera.mainCamera.transform.position.z)));
+        var delta = SpeedAnalyzer.OnUpdate(currentWorldPosition);
+        
+        // update children's position, keep parent untransform.
+        if(UpdateScroll != null)
         {
-            return;
+            UpdateScroll(this, new UpdateEventArgs { Position = delta });
         }
-
-        UpdatePosition();
-
-        dragTrigger = true;
 
         Debug.Log("Drag: " + Input.mousePosition + ", frame count: " + Time.frameCount);
     }
 
     void OnMouseDown()
     {
-        scrollTrigger = false;
-        dragTrigger = false;
+        StopScrollEvent();
 
         Debug.Log("Down: " + Input.mousePosition + ", frame count: " + Time.frameCount);
     }
 
     void OnMouseUp()
     {
-        // no dragging mode.
-        if(!dragTrigger)
-        {
-            return;
-        }
-
-        dragTrigger = false;
-
-        FireScrollEvent();
+        var currentWorldPosition =
+            Camera.mainCamera.ScreenToWorldPoint(new Vector3(0, Input.mousePosition.y,
+                                                             (transform.position.z -
+                                                              Camera.mainCamera.transform.position.z)));
+        SpeedAnalyzer.OnEnd(currentWorldPosition);
 
         Debug.Log("Up: " + Input.mousePosition + ", frame count: " + Time.frameCount);
     }
 
-    void UpdatePosition()
+    void FireScrollEvent(SpeedEventArgs args)
     {
-        // update position except first time drag is triggered.
-        if(dragTrigger)
-        {
-            var currentMousePosition = Input.mousePosition;
-            var delta = currentMousePosition - lastMousePosition;
-            transform.position += delta;
-        }
-
-        lastMousePosition = Input.mousePosition;
-    }
-
-    void FireScrollEvent()
-    {
-        scrollTrigger = true;
-
         if(FireScroll != null)
         {
-            FireScroll(this, new EventArgs());
+            FireScroll(this, args);
         }
+    }
+
+    void StopScrollEvent()
+    {
+        if(StopScroll != null)
+        {
+            StopScroll(this, new EventArgs());
+        }
+    }
+
+    void Update()
+    {
+        var ray = Camera.mainCamera.ScreenPointToRay(new Vector3(0, 0, 0));
+        Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Vector3 p = Camera.mainCamera.ScreenToWorldPoint(new Vector3(0, 0, transform.position.z - Camera.mainCamera.transform.position.z));
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(p, 0.5f);
     }
 }
